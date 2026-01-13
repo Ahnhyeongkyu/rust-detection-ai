@@ -355,11 +355,23 @@ def main():
         except Exception as e:
             error_msg = str(e)
             if "credit" in error_msg.lower() or "balance" in error_msg.lower():
-                st.error("❌ API 크레딧이 부족합니다. API 제공사 웹사이트에서 크레딧을 충전해주세요.")
-            elif "api_key" in error_msg.lower() or "invalid" in error_msg.lower():
-                st.error("❌ API 키가 올바르지 않습니다. 다시 확인해주세요.")
+                st.error("❌ API 크레딧이 부족합니다")
+                st.info("""
+                **해결 방법:**
+                - **Claude**: [console.anthropic.com](https://console.anthropic.com) → Plans & Billing → 크레딧 충전
+                - **OpenAI**: [platform.openai.com](https://platform.openai.com) → Billing → 크레딧 충전
+
+                크레딧 충전 후 다시 시도해주세요.
+                """)
+            elif "api_key" in error_msg.lower() or "invalid" in error_msg.lower() or "authentication" in error_msg.lower():
+                st.error("❌ API 키가 올바르지 않습니다")
+                st.info("API 키를 다시 확인해주세요. 키는 'sk-' 또는 'sk-ant-'로 시작합니다.")
+            elif "rate" in error_msg.lower() or "limit" in error_msg.lower():
+                st.error("❌ API 요청 한도 초과")
+                st.info("잠시 후 다시 시도해주세요.")
             else:
-                st.error(f"❌ 오류가 발생했습니다: {error_msg}")
+                st.error(f"❌ 분석 중 오류가 발생했습니다")
+                st.caption(f"상세: {error_msg[:200]}")
 
     # 푸터
     st.divider()
