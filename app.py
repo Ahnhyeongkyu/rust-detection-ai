@@ -201,8 +201,9 @@ def main():
 
         api_provider = st.selectbox(
             "AI 모델 선택",
-            options=["openai", "claude"],
-            format_func=lambda x: "GPT-4o (OpenAI) - 추천" if x == "openai" else "Claude (Anthropic)"
+            options=["claude", "openai"],
+            format_func=lambda x: "Claude (Anthropic) - 추천" if x == "claude" else "GPT-4o (OpenAI)",
+            index=0
         )
 
         api_key = st.text_input(
@@ -213,21 +214,21 @@ def main():
 
         # API 키 발급 안내
         with st.expander("🔑 API 키 발급 방법"):
-            if api_provider == "claude":
-                st.markdown("""
-                **Anthropic (Claude)**
-                1. [console.anthropic.com](https://console.anthropic.com/) 접속
-                2. 회원가입 또는 로그인
-                3. API Keys 메뉴 → 새 키 생성
-                4. 크레딧 충전 필요 (최소 $5)
-                """)
-            else:
+            if api_provider == "openai":
                 st.markdown("""
                 **OpenAI (GPT-4)**
                 1. [platform.openai.com](https://platform.openai.com/) 접속
                 2. 회원가입 또는 로그인
                 3. API Keys 메뉴 → 새 키 생성
                 4. 크레딧 충전 필요
+                """)
+            else:
+                st.markdown("""
+                **Anthropic (Claude)**
+                1. [console.anthropic.com](https://console.anthropic.com/) 접속
+                2. 회원가입 또는 로그인
+                3. API Keys 메뉴 → 새 키 생성
+                4. 크레딧 충전 필요 (최소 $5)
                 """)
 
         st.divider()
